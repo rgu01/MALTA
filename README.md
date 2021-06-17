@@ -1,7 +1,7 @@
 # MALTA
 MALTA is a tool chain for mission planning of autonomous agents. It is consisted of three components: front-end, middleware, and back-end.
 
-![Image](Icon-pictures.png "icon")
+![Image](res/tool_structure.png "icon")
 
 # Front-end: MMT
 Please follow the instructions below to install MMT.
