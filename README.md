@@ -15,3 +15,6 @@ The back-end of MALTA is for task scheduling by verifying a reachability propert
 # User Manual
 To run MALTA, one must first start the front-end in Windows:
 
+![Image](res/MMT.png "MMT GUI")
+
+After configuring the environment, vehicles, etc., one can start the middleware by running the source code in eclipse, or clicking the executable jar of the middleware.
