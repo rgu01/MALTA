@@ -44,3 +44,6 @@ Any feedback of the tool is appreciated. Please contact:
 - Rong Gu: rong.gu at mdh.se
 - Afshin Ameri: afshin.ameri at mdh.se
 - Eduard Baranov: eduard.baranov at uclouvain.be
+
+# Reference
+[1]. Rong Gu and Eduard Paul Enoiu and Cristina Seceleanu. TAMAA: UPPAAL-based Mission Planning for Autonomous Agents. The 35th ACM/SIGAPP Symposium On Applied Computing. ([PDF](http://www.es.mdh.se/publications/5685-TAMAA__UPPAAL_based_Mission_Planning_for_Autonomous_Agents))
