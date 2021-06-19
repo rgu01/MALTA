@@ -12,6 +12,8 @@ Experiment "exp-v2" is even more complex than "exp-v1", which contains temporal 
 
 ![Image](../res/exp_v2.png "Demo of experiment v2.")
 
+Experiment "special use case" is a special industrial use case of an autonomous quarry. One can find the detailed description of this mission in our paper.
+
 # Run your own experiments
 
 One can modify the parameters in the mission files (e.g., demo) that we provided, or create your own mission files. You can specify the existing time of all the areas in the map. The existing time of the navigation area would requires the mission planner to generate a mission plan that finishes all the task at least once within this period. The existing time of special areas would influence the path plans. You are encouraged to play with it or test your own applications.
