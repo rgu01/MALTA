@@ -16,4 +16,4 @@ Experiment "special use case" is a special industrial use case of an autonomous 
 
 # Run your own experiments
 
-One can modify the parameters in the mission files (e.g., demo) that we provided, or create your own mission files. You can specify the existing time of all the areas in the map. The existing time of the navigation area would requires the mission planner to generate a mission plan that finishes all the task at least once within this period. The existing time of special areas would influence the path plans. You are encouraged to play with it or test your own applications.
+One can modify the parameters in the mission files (e.g., demo) that we provided, or create your own mission files. You can specify the existing time of all the areas in the map. The existing time of the navigation area requires the mission planner to generate a mission plan that finishes all the task at least once within this period. The existing time of special areas influences the path plans. You are encouraged to play with it or test your own applications.
