@@ -31,7 +31,7 @@ The back-end of MALTA is for task scheduling by verifying a reachability propert
 
 After a while, a mission plan is synthesized and shown in the GUI:
 
-![Image](res/Result.png "Result planning")
+![Image](res/exp_v2_result.png "Result planning")
 
 If the configure does not have a valid mission plan, the GUI shows:
 
