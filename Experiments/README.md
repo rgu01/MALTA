@@ -1,12 +1,21 @@
-# Demo
+# Demos
 
-The demo is for showing the basic function of MALTA. One can load the demo into MALTA by opening a file in MMT, and choose "demo". This demo shows the basic function of mission planning: planning the sequential execution of task 1 - task 6, being carried at 6 milestones, as well as the paths that visit these milestones and circumvent the obstacles (i.e., red squares).
+The demos are for showing the basic function of MALTA. One can load the demo into MALTA by opening a file in MMT. Demo-v1 shows the basic function of mission planning: planning the sequential execution of task 1 - task 6, being carried at 6 milestones, as well as the paths that visit these milestones and circumvent the obstacles (i.e., red squares).
 
-![Image](../res/exp_demo.png "Demo of planning a sequence of tasks.")
+![Image](../res/exp_demo_v1.png "Demo 1 of planning a sequence of tasks.")
 
-Mission planning result of the demo:
+Mission planning result of demo 1:
 
-![Image](../res/exp_demo_result.png "Result of the demo.")
+![Image](../res/exp_demo_v1_result.png "Result of the demo 1.")
+
+Demo-v2 shows the mission plans of 2 agents:
+
+
+![Image](../res/exp_demo_v2.png "Demo 2 of planning a sequence of tasks.")
+
+Mission planning result of demo 2:
+
+![Image](../res/exp_demo_v2_result.png "Result of the demo 2.")
 
 # Introduction of experiments
 
