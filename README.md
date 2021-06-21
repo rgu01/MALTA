@@ -6,7 +6,18 @@ MALTA is a tool chain for mission planning of autonomous agents. It is consisted
 # Front-end: MMT
 Please follow the instructions below to install MMT.
 
-Download and install MMT from [MMT Installer](MMT INstaller/) folder.
+Download and install MMT from [MMT Installer](https://github.com/rgu01/MALTA/tree/main/MMT%20Installer) folder. The installation is straightforward and requires you to press "Next" several times.
+
+In order for MMT to communicate with the planners you will need to set correct server name/ip and ports in the settings dialog in MMT. You can find it under View->Settings.
+
+![Image](res/MmtSettings.png "MMT Settings")
+
+You are only interested in the following:
+- MMT Server Port
+- Planner Server Name/IP
+- Planner Server Port
+
+Please note that it is possible to define several planners. In such cases the results of the first planner are automatically forwarded to the 2nd planner. At the moment the 3rd planner is not used.
 
 # Middleware
 The middleware of MALTA is for path planning and model generation. Please refer to [Middleware](https://github.com/rgu01/TAMAA-DALi) for detailed instruction of deploying and using the middleware.
