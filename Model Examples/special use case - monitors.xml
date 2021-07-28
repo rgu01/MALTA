@@ -26,7 +26,7 @@ const int fullfil[AgentNum] = {500, 500, 500};
 
 int PCQueue = 0;
 clock globalTime;
-const int MAXTIME = 10000;
+const int MAXTIME = 3000;
 
 bool jobsDone()
 {
