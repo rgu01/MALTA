@@ -1,0 +1,2066 @@
+<nta >
+<declaration >// Place global declarations here.
+const int AgentNum = 1;
+typedef int[0,AgentNum-1] AgentScale;
+const int TaskNum = 10;
+const int EventNum = 0;
+const int MilestoneNum = 11;
+const int MaxIteration = 1;
+
+bool position[AgentNum][MilestoneNum]={{false,false,false,false,false,false,false,false,false,false,false}};
+bool tf[AgentNum][TaskNum]={{true,false,false,false,false,false,false,false,false,false}};
+bool ts[AgentNum][TaskNum]={{true,false,false,false,false,false,false,false,false,false}};
+
+
+bool isBusy(int taskID)
+{
+    int id = 0;
+    bool busy = false;
+
+    for(id = 0; id &lt; AgentNum; id++)
+    {
+        if(ts[id][taskID])
+        {
+            busy = true;
+            return busy;
+        }
+    }
+
+    return busy;
+}
+
+const int rules[MilestoneNum]={0,1,2,3,4,5,5,6,7,8,9};
+const int RegularTaskNum[AgentNum] = {9};
+chan move[AgentNum], initialize;
+
+int iteration[AgentNum] = {0};
+
+clock globalTime;
+
+</declaration>
+<template >
+<name >Movement0</name>
+<parameter >const AgentScale id</parameter>
+<declaration >clock t;
+</declaration>
+<location id ="initial" x ="-500" y ="-300">
+<name >initial</name>
+<committed  />
+</location>
+<location id ="P0" x ="-400" y ="-200">
+<name >P0</name>
+</location>
+<location id ="F0T1" x ="-150" y ="-100">
+<name >F0T1</name>
+<label kind ="invariant">t&lt;=94</label>
+</location>
+<location id ="F0T2" x ="0" y ="-100">
+<name >F0T2</name>
+<label kind ="invariant">t&lt;=71</label>
+</location>
+<location id ="F0T3" x ="150" y ="-100">
+<name >F0T3</name>
+<label kind ="invariant">t&lt;=86</label>
+</location>
+<location id ="F0T4" x ="300" y ="-100">
+<name >F0T4</name>
+<label kind ="invariant">t&lt;=45</label>
+</location>
+<location id ="F0T5" x ="450" y ="-100">
+<name >F0T5</name>
+<label kind ="invariant">t&lt;=95</label>
+</location>
+<location id ="F0T6" x ="600" y ="-100">
+<name >F0T6</name>
+<label kind ="invariant">t&lt;=78</label>
+</location>
+<location id ="F0T7" x ="750" y ="-100">
+<name >F0T7</name>
+<label kind ="invariant">t&lt;=90</label>
+</location>
+<location id ="F0T8" x ="900" y ="-100">
+<name >F0T8</name>
+<label kind ="invariant">t&lt;=20</label>
+</location>
+<location id ="F0T9" x ="1050" y ="-100">
+<name >F0T9</name>
+<label kind ="invariant">t&lt;=55</label>
+</location>
+<location id ="F0T10" x ="1200" y ="-100">
+<name >F0T10</name>
+<label kind ="invariant">t&lt;=45</label>
+</location>
+<location id ="P1" x ="-250" y ="-50">
+<name >P1</name>
+</location>
+<location id ="F1T0" x ="-300" y ="50">
+<name >F1T0</name>
+<label kind ="invariant">t&lt;=94</label>
+</location>
+<location id ="F1T2" x ="0" y ="50">
+<name >F1T2</name>
+<label kind ="invariant">t&lt;=166</label>
+</location>
+<location id ="F1T3" x ="150" y ="50">
+<name >F1T3</name>
+<label kind ="invariant">t&lt;=100</label>
+</location>
+<location id ="F1T4" x ="300" y ="50">
+<name >F1T4</name>
+<label kind ="invariant">t&lt;=137</label>
+</location>
+<location id ="F1T5" x ="450" y ="50">
+<name >F1T5</name>
+<label kind ="invariant">t&lt;=164</label>
+</location>
+<location id ="F1T6" x ="600" y ="50">
+<name >F1T6</name>
+<label kind ="invariant">t&lt;=141</label>
+</location>
+<location id ="F1T7" x ="750" y ="50">
+<name >F1T7</name>
+<label kind ="invariant">t&lt;=185</label>
+</location>
+<location id ="F1T8" x ="900" y ="50">
+<name >F1T8</name>
+<label kind ="invariant">t&lt;=93</label>
+</location>
+<location id ="F1T9" x ="1050" y ="50">
+<name >F1T9</name>
+<label kind ="invariant">t&lt;=78</label>
+</location>
+<location id ="F1T10" x ="1200" y ="50">
+<name >F1T10</name>
+<label kind ="invariant">t&lt;=66</label>
+</location>
+<location id ="P2" x ="-100" y ="100">
+<name >P2</name>
+</location>
+<location id ="F2T0" x ="-300" y ="200">
+<name >F2T0</name>
+<label kind ="invariant">t&lt;=71</label>
+</location>
+<location id ="F2T1" x ="-150" y ="200">
+<name >F2T1</name>
+<label kind ="invariant">t&lt;=166</label>
+</location>
+<location id ="F2T3" x ="150" y ="200">
+<name >F2T3</name>
+<label kind ="invariant">t&lt;=145</label>
+</location>
+<location id ="F2T4" x ="300" y ="200">
+<name >F2T4</name>
+<label kind ="invariant">t&lt;=53</label>
+</location>
+<location id ="F2T5" x ="450" y ="200">
+<name >F2T5</name>
+<label kind ="invariant">t&lt;=54</label>
+</location>
+<location id ="F2T6" x ="600" y ="200">
+<name >F2T6</name>
+<label kind ="invariant">t&lt;=52</label>
+</location>
+<location id ="F2T7" x ="750" y ="200">
+<name >F2T7</name>
+<label kind ="invariant">t&lt;=55</label>
+</location>
+<location id ="F2T8" x ="900" y ="200">
+<name >F2T8</name>
+<label kind ="invariant">t&lt;=85</label>
+</location>
+<location id ="F2T9" x ="1050" y ="200">
+<name >F2T9</name>
+<label kind ="invariant">t&lt;=87</label>
+</location>
+<location id ="F2T10" x ="1200" y ="200">
+<name >F2T10</name>
+<label kind ="invariant">t&lt;=117</label>
+</location>
+<location id ="P3" x ="50" y ="250">
+<name >P3</name>
+</location>
+<location id ="F3T0" x ="-300" y ="350">
+<name >F3T0</name>
+<label kind ="invariant">t&lt;=86</label>
+</location>
+<location id ="F3T1" x ="-150" y ="350">
+<name >F3T1</name>
+<label kind ="invariant">t&lt;=100</label>
+</location>
+<location id ="F3T2" x ="0" y ="350">
+<name >F3T2</name>
+<label kind ="invariant">t&lt;=145</label>
+</location>
+<location id ="F3T4" x ="300" y ="350">
+<name >F3T4</name>
+<label kind ="invariant">t&lt;=93</label>
+</location>
+<location id ="F3T5" x ="450" y ="350">
+<name >F3T5</name>
+<label kind ="invariant">t&lt;=174</label>
+</location>
+<location id ="F3T6" x ="600" y ="350">
+<name >F3T6</name>
+<label kind ="invariant">t&lt;=157</label>
+</location>
+<location id ="F3T7" x ="750" y ="350">
+<name >F3T7</name>
+<label kind ="invariant">t&lt;=142</label>
+</location>
+<location id ="F3T8" x ="900" y ="350">
+<name >F3T8</name>
+<label kind ="invariant">t&lt;=65</label>
+</location>
+<location id ="F3T9" x ="1050" y ="350">
+<name >F3T9</name>
+<label kind ="invariant">t&lt;=117</label>
+</location>
+<location id ="F3T10" x ="1200" y ="350">
+<name >F3T10</name>
+<label kind ="invariant">t&lt;=82</label>
+</location>
+<location id ="P4" x ="200" y ="400">
+<name >P4</name>
+</location>
+<location id ="F4T0" x ="-300" y ="500">
+<name >F4T0</name>
+<label kind ="invariant">t&lt;=45</label>
+</location>
+<location id ="F4T1" x ="-150" y ="500">
+<name >F4T1</name>
+<label kind ="invariant">t&lt;=137</label>
+</location>
+<location id ="F4T2" x ="0" y ="500">
+<name >F4T2</name>
+<label kind ="invariant">t&lt;=53</label>
+</location>
+<location id ="F4T3" x ="150" y ="500">
+<name >F4T3</name>
+<label kind ="invariant">t&lt;=93</label>
+</location>
+<location id ="F4T5" x ="450" y ="500">
+<name >F4T5</name>
+<label kind ="invariant">t&lt;=94</label>
+</location>
+<location id ="F4T6" x ="600" y ="500">
+<name >F4T6</name>
+<label kind ="invariant">t&lt;=77</label>
+</location>
+<location id ="F4T7" x ="750" y ="500">
+<name >F4T7</name>
+<label kind ="invariant">t&lt;=54</label>
+</location>
+<location id ="F4T8" x ="900" y ="500">
+<name >F4T8</name>
+<label kind ="invariant">t&lt;=50</label>
+</location>
+<location id ="F4T9" x ="1050" y ="500">
+<name >F4T9</name>
+<label kind ="invariant">t&lt;=99</label>
+</location>
+<location id ="F4T10" x ="1200" y ="500">
+<name >F4T10</name>
+<label kind ="invariant">t&lt;=82</label>
+</location>
+<location id ="P5" x ="350" y ="550">
+<name >P5</name>
+</location>
+<location id ="F5T0" x ="-300" y ="650">
+<name >F5T0</name>
+<label kind ="invariant">t&lt;=95</label>
+</location>
+<location id ="F5T1" x ="-150" y ="650">
+<name >F5T1</name>
+<label kind ="invariant">t&lt;=164</label>
+</location>
+<location id ="F5T2" x ="0" y ="650">
+<name >F5T2</name>
+<label kind ="invariant">t&lt;=54</label>
+</location>
+<location id ="F5T3" x ="150" y ="650">
+<name >F5T3</name>
+<label kind ="invariant">t&lt;=174</label>
+</location>
+<location id ="F5T4" x ="300" y ="650">
+<name >F5T4</name>
+<label kind ="invariant">t&lt;=94</label>
+</location>
+<location id ="F5T6" x ="600" y ="650">
+<name >F5T6</name>
+<label kind ="invariant">t&lt;=23</label>
+</location>
+<location id ="F5T7" x ="750" y ="650">
+<name >F5T7</name>
+<label kind ="invariant">t&lt;=94</label>
+</location>
+<location id ="F5T8" x ="900" y ="650">
+<name >F5T8</name>
+<label kind ="invariant">t&lt;=109</label>
+</location>
+<location id ="F5T9" x ="1050" y ="650">
+<name >F5T9</name>
+<label kind ="invariant">t&lt;=85</label>
+</location>
+<location id ="F5T10" x ="1200" y ="650">
+<name >F5T10</name>
+<label kind ="invariant">t&lt;=131</label>
+</location>
+<location id ="P6" x ="500" y ="700">
+<name >P6</name>
+</location>
+<location id ="F6T0" x ="-300" y ="800">
+<name >F6T0</name>
+<label kind ="invariant">t&lt;=78</label>
+</location>
+<location id ="F6T1" x ="-150" y ="800">
+<name >F6T1</name>
+<label kind ="invariant">t&lt;=141</label>
+</location>
+<location id ="F6T2" x ="0" y ="800">
+<name >F6T2</name>
+<label kind ="invariant">t&lt;=52</label>
+</location>
+<location id ="F6T3" x ="150" y ="800">
+<name >F6T3</name>
+<label kind ="invariant">t&lt;=157</label>
+</location>
+<location id ="F6T4" x ="300" y ="800">
+<name >F6T4</name>
+<label kind ="invariant">t&lt;=77</label>
+</location>
+<location id ="F6T5" x ="450" y ="800">
+<name >F6T5</name>
+<label kind ="invariant">t&lt;=23</label>
+</location>
+<location id ="F6T7" x ="750" y ="800">
+<name >F6T7</name>
+<label kind ="invariant">t&lt;=97</label>
+</location>
+<location id ="F6T8" x ="900" y ="800">
+<name >F6T8</name>
+<label kind ="invariant">t&lt;=92</label>
+</location>
+<location id ="F6T9" x ="1050" y ="800">
+<name >F6T9</name>
+<label kind ="invariant">t&lt;=62</label>
+</location>
+<location id ="F6T10" x ="1200" y ="800">
+<name >F6T10</name>
+<label kind ="invariant">t&lt;=108</label>
+</location>
+<location id ="P7" x ="650" y ="850">
+<name >P7</name>
+</location>
+<location id ="F7T0" x ="-300" y ="950">
+<name >F7T0</name>
+<label kind ="invariant">t&lt;=90</label>
+</location>
+<location id ="F7T1" x ="-150" y ="950">
+<name >F7T1</name>
+<label kind ="invariant">t&lt;=185</label>
+</location>
+<location id ="F7T2" x ="0" y ="950">
+<name >F7T2</name>
+<label kind ="invariant">t&lt;=55</label>
+</location>
+<location id ="F7T3" x ="150" y ="950">
+<name >F7T3</name>
+<label kind ="invariant">t&lt;=142</label>
+</location>
+<location id ="F7T4" x ="300" y ="950">
+<name >F7T4</name>
+<label kind ="invariant">t&lt;=54</label>
+</location>
+<location id ="F7T5" x ="450" y ="950">
+<name >F7T5</name>
+<label kind ="invariant">t&lt;=94</label>
+</location>
+<location id ="F7T6" x ="600" y ="950">
+<name >F7T6</name>
+<label kind ="invariant">t&lt;=97</label>
+</location>
+<location id ="F7T8" x ="900" y ="950">
+<name >F7T8</name>
+<label kind ="invariant">t&lt;=104</label>
+</location>
+<location id ="F7T9" x ="1050" y ="950">
+<name >F7T9</name>
+<label kind ="invariant">t&lt;=130</label>
+</location>
+<location id ="F7T10" x ="1200" y ="950">
+<name >F7T10</name>
+<label kind ="invariant">t&lt;=136</label>
+</location>
+<location id ="P8" x ="800" y ="1000">
+<name >P8</name>
+</location>
+<location id ="F8T0" x ="-300" y ="1100">
+<name >F8T0</name>
+<label kind ="invariant">t&lt;=20</label>
+</location>
+<location id ="F8T1" x ="-150" y ="1100">
+<name >F8T1</name>
+<label kind ="invariant">t&lt;=93</label>
+</location>
+<location id ="F8T2" x ="0" y ="1100">
+<name >F8T2</name>
+<label kind ="invariant">t&lt;=85</label>
+</location>
+<location id ="F8T3" x ="150" y ="1100">
+<name >F8T3</name>
+<label kind ="invariant">t&lt;=65</label>
+</location>
+<location id ="F8T4" x ="300" y ="1100">
+<name >F8T4</name>
+<label kind ="invariant">t&lt;=50</label>
+</location>
+<location id ="F8T5" x ="450" y ="1100">
+<name >F8T5</name>
+<label kind ="invariant">t&lt;=109</label>
+</location>
+<location id ="F8T6" x ="600" y ="1100">
+<name >F8T6</name>
+<label kind ="invariant">t&lt;=92</label>
+</location>
+<location id ="F8T7" x ="750" y ="1100">
+<name >F8T7</name>
+<label kind ="invariant">t&lt;=104</label>
+</location>
+<location id ="F8T9" x ="1050" y ="1100">
+<name >F8T9</name>
+<label kind ="invariant">t&lt;=54</label>
+</location>
+<location id ="F8T10" x ="1200" y ="1100">
+<name >F8T10</name>
+<label kind ="invariant">t&lt;=31</label>
+</location>
+<location id ="P9" x ="950" y ="1150">
+<name >P9</name>
+</location>
+<location id ="F9T0" x ="-300" y ="1250">
+<name >F9T0</name>
+<label kind ="invariant">t&lt;=55</label>
+</location>
+<location id ="F9T1" x ="-150" y ="1250">
+<name >F9T1</name>
+<label kind ="invariant">t&lt;=78</label>
+</location>
+<location id ="F9T2" x ="0" y ="1250">
+<name >F9T2</name>
+<label kind ="invariant">t&lt;=87</label>
+</location>
+<location id ="F9T3" x ="150" y ="1250">
+<name >F9T3</name>
+<label kind ="invariant">t&lt;=117</label>
+</location>
+<location id ="F9T4" x ="300" y ="1250">
+<name >F9T4</name>
+<label kind ="invariant">t&lt;=99</label>
+</location>
+<location id ="F9T5" x ="450" y ="1250">
+<name >F9T5</name>
+<label kind ="invariant">t&lt;=85</label>
+</location>
+<location id ="F9T6" x ="600" y ="1250">
+<name >F9T6</name>
+<label kind ="invariant">t&lt;=62</label>
+</location>
+<location id ="F9T7" x ="750" y ="1250">
+<name >F9T7</name>
+<label kind ="invariant">t&lt;=130</label>
+</location>
+<location id ="F9T8" x ="900" y ="1250">
+<name >F9T8</name>
+<label kind ="invariant">t&lt;=54</label>
+</location>
+<location id ="F9T10" x ="1200" y ="1250">
+<name >F9T10</name>
+<label kind ="invariant">t&lt;=49</label>
+</location>
+<location id ="P10" x ="1100" y ="1300">
+<name >P10</name>
+</location>
+<location id ="F10T0" x ="-300" y ="1400">
+<name >F10T0</name>
+<label kind ="invariant">t&lt;=45</label>
+</location>
+<location id ="F10T1" x ="-150" y ="1400">
+<name >F10T1</name>
+<label kind ="invariant">t&lt;=66</label>
+</location>
+<location id ="F10T2" x ="0" y ="1400">
+<name >F10T2</name>
+<label kind ="invariant">t&lt;=117</label>
+</location>
+<location id ="F10T3" x ="150" y ="1400">
+<name >F10T3</name>
+<label kind ="invariant">t&lt;=82</label>
+</location>
+<location id ="F10T4" x ="300" y ="1400">
+<name >F10T4</name>
+<label kind ="invariant">t&lt;=82</label>
+</location>
+<location id ="F10T5" x ="450" y ="1400">
+<name >F10T5</name>
+<label kind ="invariant">t&lt;=131</label>
+</location>
+<location id ="F10T6" x ="600" y ="1400">
+<name >F10T6</name>
+<label kind ="invariant">t&lt;=108</label>
+</location>
+<location id ="F10T7" x ="750" y ="1400">
+<name >F10T7</name>
+<label kind ="invariant">t&lt;=136</label>
+</location>
+<location id ="F10T8" x ="900" y ="1400">
+<name >F10T8</name>
+<label kind ="invariant">t&lt;=31</label>
+</location>
+<location id ="F10T9" x ="1050" y ="1400">
+<name >F10T9</name>
+<label kind ="invariant">t&lt;=49</label>
+</location>
+<init ref ="initial" />
+<transition >
+<source ref ="initial" />
+<target ref ="P0" />
+<label kind ="assignment">position[id][0]=true</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T1" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=94</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T2" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=71</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T3" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=86</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T4" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=45</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T5" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=95</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T6" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=78</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T7" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=90</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T8" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=20</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T9" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=55</label>
+</transition>
+<transition >
+<source ref ="P0" />
+<target ref ="F0T10" />
+<label kind ="assignment">t=0,position[id][0]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F0T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=45</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T0" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=94</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T2" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=166</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T3" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=100</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T4" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=137</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T5" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=164</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T6" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=141</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T7" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=185</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T8" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=93</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T9" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=78</label>
+</transition>
+<transition >
+<source ref ="P1" />
+<target ref ="F1T10" />
+<label kind ="assignment">t=0,position[id][1]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F1T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=66</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T0" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=71</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T1" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=166</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T3" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=145</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T4" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=53</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T5" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=54</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T6" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=52</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T7" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=55</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T8" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=85</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T9" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=87</label>
+</transition>
+<transition >
+<source ref ="P2" />
+<target ref ="F2T10" />
+<label kind ="assignment">t=0,position[id][2]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F2T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=117</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T0" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=86</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T1" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=100</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T2" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=145</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T4" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=93</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T5" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=174</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T6" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=157</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T7" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=142</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T8" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=65</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T9" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=117</label>
+</transition>
+<transition >
+<source ref ="P3" />
+<target ref ="F3T10" />
+<label kind ="assignment">t=0,position[id][3]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F3T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=82</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T0" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=45</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T1" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=137</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T2" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=53</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T3" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=93</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T5" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=94</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T6" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=77</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T7" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=54</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T8" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=50</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T9" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=99</label>
+</transition>
+<transition >
+<source ref ="P4" />
+<target ref ="F4T10" />
+<label kind ="assignment">t=0,position[id][4]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F4T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=82</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T0" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=95</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T1" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=164</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T2" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=54</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T3" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=174</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T4" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=94</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T6" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=23</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T7" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=94</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T8" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=109</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T9" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=85</label>
+</transition>
+<transition >
+<source ref ="P5" />
+<target ref ="F5T10" />
+<label kind ="assignment">t=0,position[id][5]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F5T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=131</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T0" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=78</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T1" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=141</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T2" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=52</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T3" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=157</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T4" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=77</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T5" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=23</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T7" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=97</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T8" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=92</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T9" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=62</label>
+</transition>
+<transition >
+<source ref ="P6" />
+<target ref ="F6T10" />
+<label kind ="assignment">t=0,position[id][6]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F6T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=108</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T0" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=90</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T1" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=185</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T2" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=55</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T3" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=142</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T4" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=54</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T5" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=94</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T6" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=97</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T8" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=104</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T9" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=130</label>
+</transition>
+<transition >
+<source ref ="P7" />
+<target ref ="F7T10" />
+<label kind ="assignment">t=0,position[id][7]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F7T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=136</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T0" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=20</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T1" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=93</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T2" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=85</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T3" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=65</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T4" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=50</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T5" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=109</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T6" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=92</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T7" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=104</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T9" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=54</label>
+</transition>
+<transition >
+<source ref ="P8" />
+<target ref ="F8T10" />
+<label kind ="assignment">t=0,position[id][8]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F8T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=31</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T0" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=55</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T1" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=78</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T2" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=87</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T3" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=117</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T4" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=99</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T5" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=85</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T6" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=62</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T7" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=130</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T8" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=54</label>
+</transition>
+<transition >
+<source ref ="P9" />
+<target ref ="F9T10" />
+<label kind ="assignment">t=0,position[id][9]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F9T10" />
+<target ref ="P10" />
+<label kind ="assignment">t=0,position[id][10]=true</label>
+<label kind ="guard">t&gt;=49</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T0" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T0" />
+<target ref ="P0" />
+<label kind ="assignment">t=0,position[id][0]=true</label>
+<label kind ="guard">t&gt;=45</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T1" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T1" />
+<target ref ="P1" />
+<label kind ="assignment">t=0,position[id][1]=true</label>
+<label kind ="guard">t&gt;=66</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T2" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T2" />
+<target ref ="P2" />
+<label kind ="assignment">t=0,position[id][2]=true</label>
+<label kind ="guard">t&gt;=117</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T3" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T3" />
+<target ref ="P3" />
+<label kind ="assignment">t=0,position[id][3]=true</label>
+<label kind ="guard">t&gt;=82</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T4" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T4" />
+<target ref ="P4" />
+<label kind ="assignment">t=0,position[id][4]=true</label>
+<label kind ="guard">t&gt;=82</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T5" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T5" />
+<target ref ="P5" />
+<label kind ="assignment">t=0,position[id][5]=true</label>
+<label kind ="guard">t&gt;=131</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T6" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T6" />
+<target ref ="P6" />
+<label kind ="assignment">t=0,position[id][6]=true</label>
+<label kind ="guard">t&gt;=108</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T7" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T7" />
+<target ref ="P7" />
+<label kind ="assignment">t=0,position[id][7]=true</label>
+<label kind ="guard">t&gt;=136</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T8" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T8" />
+<target ref ="P8" />
+<label kind ="assignment">t=0,position[id][8]=true</label>
+<label kind ="guard">t&gt;=31</label>
+</transition>
+<transition >
+<source ref ="P10" />
+<target ref ="F10T9" />
+<label kind ="assignment">t=0,position[id][10]=false</label>
+<label kind ="synchronisation">move[id]?</label>
+</transition>
+<transition >
+<source ref ="F10T9" />
+<target ref ="P9" />
+<label kind ="assignment">t=0,position[id][9]=true</label>
+<label kind ="guard">t&gt;=49</label>
+</transition>
+</template>
+<template >
+<name >TaskExecution0</name>
+<parameter >const AgentScale id</parameter>
+<declaration >clock t;
+
+void updateIteration()
+{
+	int i=0;
+	bool finish = true;
+	for(i=1;i&lt;=RegularTaskNum[id];i++)
+	{
+		finish &amp;= tf[id][i];
+	}
+	if(finish)
+	{
+		for(i=1;i&lt;=RegularTaskNum[id];i++)
+		{
+			tf[id][i]=false;
+		}
+		
+		iteration[id]+=1;
+		if(iteration[id]&gt;=MaxIteration)
+		{
+			iteration[id]=MaxIteration;
+		}
+	}
+	else
+	{
+    	finish = true;
+	}
+}
+
+</declaration>
+<location id ="T0" x ="-400" y ="-200">
+<name >T0</name>
+</location>
+<location id ="T1" x ="-400" y ="-500">
+<name >T1</name>
+<label kind ="invariant">t&lt;=9</label>
+</location>
+<location id ="T2" x ="-100" y ="-200">
+<name >T2</name>
+<label kind ="invariant">t&lt;=6</label>
+</location>
+<location id ="T3" x ="-400" y ="100">
+<name >T3</name>
+<label kind ="invariant">t&lt;=9</label>
+</location>
+<location id ="T4" x ="-700" y ="-400">
+<name >T4</name>
+<label kind ="invariant">t&lt;=0</label>
+</location>
+<location id ="T5" x ="-200" y ="-500">
+<name >T5</name>
+<label kind ="invariant">t&lt;=5</label>
+</location>
+<location id ="T6" x ="-100" y ="0">
+<name >T6</name>
+<label kind ="invariant">t&lt;=5</label>
+</location>
+<location id ="T7" x ="-200" y ="100">
+<name >T7</name>
+<label kind ="invariant">t&lt;=0</label>
+</location>
+<location id ="T8" x ="-700" y ="-600">
+<name >T8</name>
+<label kind ="invariant">t&lt;=11</label>
+</location>
+<location id ="T9" x ="0" y ="-500">
+<name >T9</name>
+<label kind ="invariant">t&lt;=15</label>
+</location>
+<init ref ="T0" />
+<transition >
+<source ref ="T0" />
+<target ref ="T0" />
+<label kind ="synchronisation">move[id]!</label>
+<label kind ="assignment">t=0</label>
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T1" />
+<label kind ="assignment">t=0,ts[id][1]=true,tf[id][1]=false</label>
+<label kind ="guard">position[id][1]</label>
+</transition>
+<transition >
+<source ref ="T1" />
+<target ref ="T0" />
+<label kind ="assignment" x ="30" y ="-320">t=0,ts[id][1]=false,tf[id][1]=true,
+updateIteration()</label>
+<label kind ="guard" x ="0" y ="-350">t&gt;=7</label>
+<nail x ="0" y ="-350" />
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T2" />
+<label kind ="assignment">t=0,ts[id][2]=true,tf[id][2]=false</label>
+<label kind ="guard">(tf[id][1])&amp;&amp;(position[id][2])</label>
+</transition>
+<transition >
+<source ref ="T2" />
+<target ref ="T0" />
+<label kind ="assignment" x ="-220" y ="-320">t=0,ts[id][2]=false,tf[id][2]=true,
+updateIteration()</label>
+<label kind ="guard" x ="-250" y ="-350">t&gt;=3</label>
+<nail x ="-250" y ="-350" />
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T3" />
+<label kind ="assignment">t=0,ts[id][3]=true,tf[id][3]=false</label>
+<label kind ="guard">(tf[id][2])&amp;&amp;(position[id][3])</label>
+</transition>
+<transition >
+<source ref ="T3" />
+<target ref ="T0" />
+<label kind ="assignment" x ="-220" y ="-20">t=0,ts[id][3]=false,tf[id][3]=true,
+updateIteration()</label>
+<label kind ="guard" x ="-250" y ="-50">t&gt;=3</label>
+<nail x ="-250" y ="-50" />
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T4" />
+<label kind ="assignment">t=0,ts[id][4]=true,tf[id][4]=false</label>
+<label kind ="guard">(tf[id][3])&amp;&amp;(position[id][4])</label>
+</transition>
+<transition >
+<source ref ="T4" />
+<target ref ="T0" />
+<label kind ="assignment" x ="-520" y ="-20">t=0,ts[id][4]=false,tf[id][4]=true,
+updateIteration()</label>
+<label kind ="guard" x ="-550" y ="-50">t&gt;=0</label>
+<nail x ="-550" y ="-50" />
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T5" />
+<label kind ="assignment">t=0,ts[id][5]=true,tf[id][5]=false</label>
+<label kind ="guard">(tf[id][4])&amp;&amp;(position[id][5]||position[id][6])</label>
+</transition>
+<transition >
+<source ref ="T5" />
+<target ref ="T0" />
+<label kind ="assignment" x ="-270" y ="-20">t=0,ts[id][5]=false,tf[id][5]=true,
+updateIteration()</label>
+<label kind ="guard" x ="-300" y ="-50">t&gt;=1</label>
+<nail x ="-300" y ="-50" />
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T6" />
+<label kind ="assignment">t=0,ts[id][6]=true,tf[id][6]=false</label>
+<label kind ="guard">(tf[id][5])&amp;&amp;(position[id][7])</label>
+</transition>
+<transition >
+<source ref ="T6" />
+<target ref ="T0" />
+<label kind ="assignment" x ="-220" y ="-20">t=0,ts[id][6]=false,tf[id][6]=true,
+updateIteration()</label>
+<label kind ="guard" x ="-250" y ="-50">t&gt;=2</label>
+<nail x ="-250" y ="-50" />
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T7" />
+<label kind ="assignment">t=0,ts[id][7]=true,tf[id][7]=false</label>
+<label kind ="guard">(tf[id][6])&amp;&amp;(position[id][8])</label>
+</transition>
+<transition >
+<source ref ="T7" />
+<target ref ="T0" />
+<label kind ="assignment" x ="-270" y ="-20">t=0,ts[id][7]=false,tf[id][7]=true,
+updateIteration()</label>
+<label kind ="guard" x ="-300" y ="-50">t&gt;=0</label>
+<nail x ="-300" y ="-50" />
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T8" />
+<label kind ="assignment">t=0,ts[id][8]=true,tf[id][8]=false</label>
+<label kind ="guard">(tf[id][7])&amp;&amp;(position[id][9])</label>
+</transition>
+<transition >
+<source ref ="T8" />
+<target ref ="T0" />
+<label kind ="assignment" x ="-520" y ="-20">t=0,ts[id][8]=false,tf[id][8]=true,
+updateIteration()</label>
+<label kind ="guard" x ="-550" y ="-50">t&gt;=2</label>
+<nail x ="-550" y ="-50" />
+</transition>
+<transition >
+<source ref ="T0" />
+<target ref ="T9" />
+<label kind ="assignment">t=0,ts[id][9]=true,tf[id][9]=false</label>
+<label kind ="guard">(tf[id][8])&amp;&amp;(position[id][10])</label>
+</transition>
+<transition >
+<source ref ="T9" />
+<target ref ="T0" />
+<label kind ="assignment" x ="-170" y ="-20">t=0,ts[id][9]=false,tf[id][9]=true,
+updateIteration()</label>
+<label kind ="guard" x ="-200" y ="-50">t&gt;=10</label>
+<nail x ="-200" y ="-50" />
+</transition>
+</template>
+<system >movement0 = Movement0(0);
+taskExe0 = TaskExecution0(0);
+
+system movement0, taskExe0;</system>
+<queries >
+<query >
+<formula >E&lt;&gt;  iteration[0]&gt;=MaxIteration</formula>
+<comment >Task Coverage</comment>
+</query>
+</queries>
+</nta>
