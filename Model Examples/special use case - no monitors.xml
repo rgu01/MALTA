@@ -15,7 +15,7 @@ bool ts[AgentNum][TaskNum]={{true,false,false,false},{true,false,false,false},{t
 const int rules[AgentNum][MilestoneNum] = {{0,3,1,1,2,2},{0,3,1,1,2,2},{0,3,1,1,2,2}};
 
 const int RegularTaskNum[AgentNum] = {3,3,3};
-chan move[AgentNum], initialize, charge[AgentNum], exe[AgentNum], arrive[AgentNum];
+chan move[AgentNum], initialize;
 
 //int iteration[AgentNum] = {0,0,0,0,0,0};
 int stone = 90;
@@ -147,7 +147,6 @@ bool isBusy(int taskID)
 			<source ref="id0"/>
 			<target ref="id1"/>
 			<label kind="guard" x="-314" y="-153">t&gt;=10</label>
-			<label kind="synchronisation" x="-314" y="-170">exe[id]!</label>
 			<label kind="assignment" x="-314" y="-136">t=0,ts[id][2]=false,tf[id][2]=true,
 updateIteration(), consume(100)</label>
 			<nail x="-229" y="-136"/>
@@ -185,7 +184,6 @@ globalTime&lt;=MAXTIME</label>
 			<source ref="id2"/>
 			<target ref="id1"/>
 			<label kind="guard" x="-357" y="-42">t&gt;=10</label>
-			<label kind="synchronisation" x="-357" y="-59">exe[id]!</label>
 			<label kind="assignment" x="-357" y="-25">t=0,ts[id][3]=false,tf[id][3]=true,
 updateIteration(), consume(100)</label>
 			<nail x="-340" y="-51"/>
@@ -203,7 +201,6 @@ globalTime&lt;=MAXTIME</label>
 			<source ref="id3"/>
 			<target ref="id1"/>
 			<label kind="guard" x="-357" y="-365">t&gt;=30</label>
-			<label kind="synchronisation" x="-357" y="-382">exe[id]!</label>
 			<label kind="assignment" x="-357" y="-348">t=0,ts[id][1]=false,tf[id][1]=true,
 updateIteration(),refresh()</label>
 			<nail x="-340" y="-348"/>
@@ -221,7 +218,6 @@ globalTime&lt;=MAXTIME</label>
 			<source ref="id4"/>
 			<target ref="id1"/>
 			<label kind="guard" x="-663" y="-144">t&gt;=60</label>
-			<label kind="synchronisation" x="-663" y="-161">exe[id]!</label>
 			<label kind="assignment" x="-663" y="-127">t=0,ts[id][2]=false,tf[id][2]=true,
 updateIteration(), consume(600)</label>
 			<nail x="-578" y="-127"/>
@@ -331,7 +327,6 @@ void consume(int consumption)
 			<source ref="id7"/>
 			<target ref="id12"/>
 			<label kind="guard" x="-110" y="-30">t&gt;=34</label>
-			<label kind="synchronisation" x="-82" y="-17">charge[id]!</label>
 			<label kind="assignment" x="-110" y="0">t=0,position[id][2]=true,consume(34)</label>
 		</transition>
 		<transition>
@@ -344,7 +339,6 @@ void consume(int consumption)
 			<source ref="id8"/>
 			<target ref="id16"/>
 			<label kind="guard" x="40" y="45">t&gt;=18</label>
-			<label kind="synchronisation" x="68" y="58">charge[id]!</label>
 			<label kind="assignment" x="40" y="75">t=0,position[id][3]=true,consume(18)</label>
 		</transition>
 		<transition>
@@ -358,7 +352,6 @@ void consume(int consumption)
 			<source ref="id10"/>
 			<target ref="id12"/>
 			<label kind="guard" x="-110" y="45">t&gt;=177</label>
-			<label kind="synchronisation" x="-82" y="58">charge[id]!</label>
 			<label kind="assignment" x="-110" y="75">t=0,position[id][2]=true,consume(177)</label>
 		</transition>
 		<transition>
@@ -372,7 +365,6 @@ void consume(int consumption)
 			<source ref="id11"/>
 			<target ref="id16"/>
 			<label kind="guard" x="40" y="120">t&gt;=170</label>
-			<label kind="synchronisation" x="68" y="133">charge[id]!</label>
 			<label kind="assignment" x="40" y="150">t=0,position[id][3]=true,consume(170)</label>
 		</transition>
 		<transition>
@@ -386,7 +378,6 @@ void consume(int consumption)
 			<source ref="id13"/>
 			<target ref="id9"/>
 			<label kind="guard" x="-260" y="45">t&gt;=177</label>
-			<label kind="synchronisation" x="-232" y="58">arrive[id]!</label>
 			<label kind="assignment" x="-260" y="75">t=0,position[id][1]=true,consume(177)</label>
 		</transition>
 		<transition>
@@ -400,7 +391,6 @@ void consume(int consumption)
 			<source ref="id14"/>
 			<target ref="id20"/>
 			<label kind="guard" x="190" y="270">t&gt;=36</label>
-			<label kind="synchronisation" x="218" y="283">arrive[id]!</label>
 			<label kind="assignment" x="190" y="300">t=0,position[id][4]=true,PCQueue++,consume(36)</label>
 		</transition>
 		<transition>
@@ -414,7 +404,6 @@ void consume(int consumption)
 			<source ref="id15"/>
 			<target ref="id23"/>
 			<label kind="guard" x="340" y="345">t&gt;=33</label>
-			<label kind="synchronisation" x="368" y="358">arrive[id]!</label>
 			<label kind="assignment" x="340" y="375">t=0,position[id][5]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -428,7 +417,6 @@ void consume(int consumption)
 			<source ref="id17"/>
 			<target ref="id9"/>
 			<label kind="guard" x="-260" y="120">t&gt;=170</label>
-			<label kind="synchronisation" x="-232" y="133">arrive[id]!</label>
 			<label kind="assignment" x="-260" y="150">t=0,position[id][1]=true,consume(170)</label>
 		</transition>
 		<transition>
@@ -442,7 +430,6 @@ void consume(int consumption)
 			<source ref="id18"/>
 			<target ref="id20"/>
 			<label kind="guard" x="190" y="345">t&gt;=42</label>
-			<label kind="synchronisation" x="221" y="357">arrive[id]!</label>
 			<label kind="assignment" x="190" y="375">t=0,position[id][4]=true,PCQueue++,consume(42)</label>
 		</transition>
 		<transition>
@@ -456,7 +443,6 @@ void consume(int consumption)
 			<source ref="id19"/>
 			<target ref="id23"/>
 			<label kind="guard" x="340" y="420">t&gt;=33</label>
-			<label kind="synchronisation" x="368" y="433">arrive[id]!</label>
 			<label kind="assignment" x="340" y="450">t=0,position[id][5]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -470,7 +456,6 @@ void consume(int consumption)
 			<source ref="id21"/>
 			<target ref="id12"/>
 			<label kind="guard" x="-110" y="270">t&gt;=36</label>
-			<label kind="synchronisation" x="-82" y="283">charge[id]!</label>
 			<label kind="assignment" x="-110" y="300">t=0,position[id][2]=true,consume(36)</label>
 		</transition>
 		<transition>
@@ -484,7 +469,6 @@ void consume(int consumption)
 			<source ref="id22"/>
 			<target ref="id16"/>
 			<label kind="guard" x="40" y="345">t&gt;=42</label>
-			<label kind="synchronisation" x="68" y="358">charge[id]!</label>
 			<label kind="assignment" x="40" y="375">t=0,position[id][3]=true,consume(42)</label>
 		</transition>
 		<transition>
@@ -498,7 +482,6 @@ void consume(int consumption)
 			<source ref="id24"/>
 			<target ref="id12"/>
 			<label kind="guard" x="-110" y="345">t&gt;=33</label>
-			<label kind="synchronisation" x="-82" y="358">charge[id]!</label>
 			<label kind="assignment" x="-110" y="375">t=0,position[id][2]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -512,7 +495,6 @@ void consume(int consumption)
 			<source ref="id25"/>
 			<target ref="id16"/>
 			<label kind="guard" x="40" y="420">t&gt;=33</label>
-			<label kind="synchronisation" x="68" y="433">charge[id]!</label>
 			<label kind="assignment" x="40" y="450">t=0,position[id][3]=true,consume(33)</label>
 		</transition>
 	</template>
@@ -620,7 +602,6 @@ void consume(int consumption)
 			<source ref="id28"/>
 			<target ref="id33"/>
 			<label kind="guard" x="-110" y="-30">t&gt;=59</label>
-			<label kind="synchronisation" x="-82" y="-17">charge[id]!</label>
 			<label kind="assignment" x="-110" y="0">t=0,position[id][2]=true,consume(59)</label>
 		</transition>
 		<transition>
@@ -633,7 +614,6 @@ void consume(int consumption)
 			<source ref="id29"/>
 			<target ref="id37"/>
 			<label kind="guard" x="40" y="45">t&gt;=43</label>
-			<label kind="synchronisation" x="68" y="58">charge[id]!</label>
 			<label kind="assignment" x="40" y="75">t=0,position[id][3]=true,consume(43)</label>
 		</transition>
 		<transition>
@@ -647,7 +627,6 @@ void consume(int consumption)
 			<source ref="id31"/>
 			<target ref="id33"/>
 			<label kind="guard" x="-110" y="45">t&gt;=177</label>
-			<label kind="synchronisation" x="-82" y="58">charge[id]!</label>
 			<label kind="assignment" x="-110" y="75">t=0,position[id][2]=true,consume(177)</label>
 		</transition>
 		<transition>
@@ -661,7 +640,6 @@ void consume(int consumption)
 			<source ref="id32"/>
 			<target ref="id37"/>
 			<label kind="guard" x="40" y="120">t&gt;=170</label>
-			<label kind="synchronisation" x="68" y="133">charge[id]!</label>
 			<label kind="assignment" x="40" y="150">t=0,position[id][3]=true,consume(170)</label>
 		</transition>
 		<transition>
@@ -675,7 +653,6 @@ void consume(int consumption)
 			<source ref="id34"/>
 			<target ref="id30"/>
 			<label kind="guard" x="-260" y="45">t&gt;=177</label>
-			<label kind="synchronisation" x="-232" y="58">arrive[id]!</label>
 			<label kind="assignment" x="-260" y="75">t=0,position[id][1]=true,consume(177)</label>
 		</transition>
 		<transition>
@@ -689,7 +666,6 @@ void consume(int consumption)
 			<source ref="id35"/>
 			<target ref="id41"/>
 			<label kind="guard" x="190" y="270">t&gt;=36</label>
-			<label kind="synchronisation" x="218" y="283">arrive[id]!</label>
 			<label kind="assignment" x="190" y="300">t=0,position[id][4]=true,PCQueue++,consume(36)</label>
 		</transition>
 		<transition>
@@ -703,7 +679,6 @@ void consume(int consumption)
 			<source ref="id36"/>
 			<target ref="id44"/>
 			<label kind="guard" x="340" y="345">t&gt;=33</label>
-			<label kind="synchronisation" x="368" y="358">arrive[id]!</label>
 			<label kind="assignment" x="340" y="375">t=0,position[id][5]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -717,7 +692,6 @@ void consume(int consumption)
 			<source ref="id38"/>
 			<target ref="id30"/>
 			<label kind="guard" x="-260" y="120">t&gt;=170</label>
-			<label kind="synchronisation" x="-232" y="133">arrive[id]!</label>
 			<label kind="assignment" x="-260" y="150">t=0,position[id][1]=true,consume(170)</label>
 		</transition>
 		<transition>
@@ -731,7 +705,6 @@ void consume(int consumption)
 			<source ref="id39"/>
 			<target ref="id41"/>
 			<label kind="guard" x="190" y="345">t&gt;=42</label>
-			<label kind="synchronisation" x="221" y="357">arrive[id]!</label>
 			<label kind="assignment" x="190" y="375">t=0,position[id][4]=true,PCQueue++,consume(42)</label>
 		</transition>
 		<transition>
@@ -745,7 +718,6 @@ void consume(int consumption)
 			<source ref="id40"/>
 			<target ref="id44"/>
 			<label kind="guard" x="340" y="420">t&gt;=33</label>
-			<label kind="synchronisation" x="368" y="433">arrive[id]!</label>
 			<label kind="assignment" x="340" y="450">t=0,position[id][5]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -759,7 +731,6 @@ void consume(int consumption)
 			<source ref="id42"/>
 			<target ref="id33"/>
 			<label kind="guard" x="-110" y="270">t&gt;=36</label>
-			<label kind="synchronisation" x="-82" y="283">charge[id]!</label>
 			<label kind="assignment" x="-110" y="300">t=0,position[id][2]=true,consume(36)</label>
 		</transition>
 		<transition>
@@ -773,7 +744,6 @@ void consume(int consumption)
 			<source ref="id43"/>
 			<target ref="id37"/>
 			<label kind="guard" x="40" y="345">t&gt;=42</label>
-			<label kind="synchronisation" x="68" y="358">charge[id]!</label>
 			<label kind="assignment" x="40" y="375">t=0,position[id][3]=true,consume(42)</label>
 		</transition>
 		<transition>
@@ -787,7 +757,6 @@ void consume(int consumption)
 			<source ref="id45"/>
 			<target ref="id33"/>
 			<label kind="guard" x="-110" y="345">t&gt;=33</label>
-			<label kind="synchronisation" x="-82" y="358">charge[id]!</label>
 			<label kind="assignment" x="-110" y="375">t=0,position[id][2]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -801,7 +770,6 @@ void consume(int consumption)
 			<source ref="id46"/>
 			<target ref="id37"/>
 			<label kind="guard" x="40" y="420">t&gt;=33</label>
-			<label kind="synchronisation" x="68" y="433">charge[id]!</label>
 			<label kind="assignment" x="40" y="450">t=0,position[id][3]=true,consume(33)</label>
 		</transition>
 	</template>
@@ -908,7 +876,6 @@ void consume(int consumption)
 			<source ref="id49"/>
 			<target ref="id54"/>
 			<label kind="guard" x="-110" y="-30">t&gt;=12</label>
-			<label kind="synchronisation" x="-82" y="-17">charge[id]!</label>
 			<label kind="assignment" x="-110" y="0">t=0,position[id][2]=true,consume(12)</label>
 		</transition>
 		<transition>
@@ -921,7 +888,6 @@ void consume(int consumption)
 			<source ref="id50"/>
 			<target ref="id58"/>
 			<label kind="guard" x="40" y="45">t&gt;=28</label>
-			<label kind="synchronisation" x="68" y="58">charge[id]!</label>
 			<label kind="assignment" x="40" y="75">t=0,position[id][3]=true,consume(28)</label>
 		</transition>
 		<transition>
@@ -935,7 +901,6 @@ void consume(int consumption)
 			<source ref="id52"/>
 			<target ref="id54"/>
 			<label kind="guard" x="-110" y="45">t&gt;=177</label>
-			<label kind="synchronisation" x="-82" y="58">charge[id]!</label>
 			<label kind="assignment" x="-110" y="75">t=0,position[id][2]=true,consume(177)</label>
 		</transition>
 		<transition>
@@ -949,7 +914,6 @@ void consume(int consumption)
 			<source ref="id53"/>
 			<target ref="id58"/>
 			<label kind="guard" x="40" y="120">t&gt;=170</label>
-			<label kind="synchronisation" x="68" y="133">charge[id]!</label>
 			<label kind="assignment" x="40" y="150">t=0,position[id][3]=true,consume(170)</label>
 		</transition>
 		<transition>
@@ -963,7 +927,6 @@ void consume(int consumption)
 			<source ref="id55"/>
 			<target ref="id51"/>
 			<label kind="guard" x="-260" y="45">t&gt;=177</label>
-			<label kind="synchronisation" x="-232" y="58">arrive[id]!</label>
 			<label kind="assignment" x="-260" y="75">t=0,position[id][1]=true,consume(177)</label>
 		</transition>
 		<transition>
@@ -977,7 +940,6 @@ void consume(int consumption)
 			<source ref="id56"/>
 			<target ref="id62"/>
 			<label kind="guard" x="190" y="270">t&gt;=36</label>
-			<label kind="synchronisation" x="218" y="283">arrive[id]!</label>
 			<label kind="assignment" x="190" y="300">t=0,position[id][4]=true,PCQueue++,consume(36)</label>
 		</transition>
 		<transition>
@@ -991,7 +953,6 @@ void consume(int consumption)
 			<source ref="id57"/>
 			<target ref="id65"/>
 			<label kind="guard" x="340" y="345">t&gt;=33</label>
-			<label kind="synchronisation" x="368" y="358">arrive[id]!</label>
 			<label kind="assignment" x="340" y="375">t=0,position[id][5]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -1005,7 +966,6 @@ void consume(int consumption)
 			<source ref="id59"/>
 			<target ref="id51"/>
 			<label kind="guard" x="-260" y="120">t&gt;=170</label>
-			<label kind="synchronisation" x="-232" y="133">arrive[id]!</label>
 			<label kind="assignment" x="-260" y="150">t=0,position[id][1]=true,consume(170)</label>
 		</transition>
 		<transition>
@@ -1019,7 +979,6 @@ void consume(int consumption)
 			<source ref="id60"/>
 			<target ref="id62"/>
 			<label kind="guard" x="190" y="345">t&gt;=42</label>
-			<label kind="synchronisation" x="221" y="357">arrive[id]!</label>
 			<label kind="assignment" x="190" y="375">t=0,position[id][4]=true,PCQueue++,consume(42)</label>
 		</transition>
 		<transition>
@@ -1033,7 +992,6 @@ void consume(int consumption)
 			<source ref="id61"/>
 			<target ref="id65"/>
 			<label kind="guard" x="340" y="420">t&gt;=33</label>
-			<label kind="synchronisation" x="368" y="433">arrive[id]!</label>
 			<label kind="assignment" x="340" y="450">t=0,position[id][5]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -1047,7 +1005,6 @@ void consume(int consumption)
 			<source ref="id63"/>
 			<target ref="id54"/>
 			<label kind="guard" x="-110" y="270">t&gt;=36</label>
-			<label kind="synchronisation" x="-82" y="283">charge[id]!</label>
 			<label kind="assignment" x="-110" y="300">t=0,position[id][2]=true,consume(36)</label>
 		</transition>
 		<transition>
@@ -1061,7 +1018,6 @@ void consume(int consumption)
 			<source ref="id64"/>
 			<target ref="id58"/>
 			<label kind="guard" x="40" y="345">t&gt;=42</label>
-			<label kind="synchronisation" x="68" y="358">charge[id]!</label>
 			<label kind="assignment" x="40" y="375">t=0,position[id][3]=true,consume(42)</label>
 		</transition>
 		<transition>
@@ -1075,7 +1031,6 @@ void consume(int consumption)
 			<source ref="id66"/>
 			<target ref="id54"/>
 			<label kind="guard" x="-110" y="345">t&gt;=33</label>
-			<label kind="synchronisation" x="-82" y="358">charge[id]!</label>
 			<label kind="assignment" x="-110" y="375">t=0,position[id][2]=true,consume(33)</label>
 		</transition>
 		<transition>
@@ -1089,229 +1044,20 @@ void consume(int consumption)
 			<source ref="id67"/>
 			<target ref="id58"/>
 			<label kind="guard" x="40" y="420">t&gt;=33</label>
-			<label kind="synchronisation" x="68" y="433">charge[id]!</label>
 			<label kind="assignment" x="40" y="450">t=0,position[id][3]=true,consume(33)</label>
-		</transition>
-	</template>
-	<template>
-		<name>Auxiliry</name>
-		<parameter>const AgentScale id</parameter>
-		<location id="id68" x="-315" y="-365" color="#ff0000">
-			<name x="-332" y="-356">Error</name>
-		</location>
-		<location id="id69" x="-425" y="-365">
-			<name x="-468" y="-356">Wait</name>
-		</location>
-		<location id="id70" x="-553" y="-365">
-			<name x="-544" y="-356">Sleep</name>
-		</location>
-		<init ref="id70"/>
-		<transition>
-			<source ref="id69"/>
-			<target ref="id68"/>
-			<label kind="guard" x="-391" y="-467">!ts[id][1]</label>
-			<label kind="synchronisation" x="-391" y="-450">exe[id]?</label>
-			<nail x="-425" y="-425"/>
-			<nail x="-314" y="-425"/>
-		</transition>
-		<transition>
-			<source ref="id70"/>
-			<target ref="id70"/>
-			<label kind="synchronisation" x="-604" y="-348">exe[id]?</label>
-			<nail x="-587" y="-357"/>
-			<nail x="-570" y="-340"/>
-		</transition>
-		<transition>
-			<source ref="id69"/>
-			<target ref="id70"/>
-			<label kind="guard" x="-519" y="-467">ts[id][1]</label>
-			<label kind="synchronisation" x="-519" y="-450">exe[id]?</label>
-			<nail x="-493" y="-433"/>
-		</transition>
-		<transition>
-			<source ref="id70"/>
-			<target ref="id70"/>
-			<label kind="synchronisation" x="-604" y="-416">arrive[id]?</label>
-			<nail x="-570" y="-399"/>
-			<nail x="-587" y="-382"/>
-		</transition>
-		<transition>
-			<source ref="id69"/>
-			<target ref="id68"/>
-			<label kind="synchronisation" x="-399" y="-408">charge[id]?</label>
-			<nail x="-374" y="-391"/>
-		</transition>
-		<transition>
-			<source ref="id69"/>
-			<target ref="id68"/>
-			<label kind="synchronisation" x="-408" y="-357">arrive[id]?</label>
-		</transition>
-		<transition>
-			<source ref="id70"/>
-			<target ref="id69"/>
-			<label kind="synchronisation" x="-527" y="-390">charge[id]?</label>
-		</transition>
-	</template>
-	<template>
-		<name>TaskExecution_exp</name>
-		<parameter>const AgentScale id</parameter>
-		<declaration>clock t;
-
-void refresh()
-{
-    battery[id] += fullfil[id];
-}
-
-void consume(int consumption)
-{
-    battery[id] -= consumption * consumingRate[id];
-}
-
-void updateIteration()
-{
-	int i=0;
-
-	if(tf[id][3])
-	{
-		for(i=1;i&lt;=RegularTaskNum[id]-1;i++)
-		{
-			tf[id][i]=false;
-		}
-        stone = stone - load;
-        if(stone &lt;= 0)
-        {
-            stone = 0;
-        }
-	}
-	else
-	{
-    	//
-	}
-}
-
-bool isBusy(int taskID)
-{
-    bool busy = false;
-    int other_id = 0, other_position = -1, position_id = 0;
-
-    if(jobsDone()) return true;
-
-    for(other_id = 0; other_id &lt; AgentNum; other_id++)
-    {
-        if(other_id != id &amp;&amp; ts[other_id][taskID])
-        {
-            for(position_id = 0; position_id &lt; MilestoneNum; position_id++)
-            {
-                if(position[other_id][position_id])
-                {
-                    other_position = position_id;
-                }
-            }
-            if(position[id][other_position])
-            {
-                busy = true;
-            }
-            else
-            {
-                busy = false;
-            }
-
-            return busy;
-        }
-    }
-
-    return busy;
-}
-
-
-
-</declaration>
-		<location id="id71" x="-102" y="-204">
-			<name x="-119" y="-238">T2_2</name>
-			<label kind="invariant" x="-127" y="-187">t&lt;=10</label>
-		</location>
-		<location id="id72" x="-400" y="-200">
-			<name x="-410" y="-230">T0</name>
-		</location>
-		<location id="id73" x="-680" y="-204">
-			<name x="-690" y="-234">T2_1</name>
-			<label kind="invariant" x="-688" y="-187">t&lt;=60</label>
-		</location>
-		<init ref="id72"/>
-		<transition>
-			<source ref="id71"/>
-			<target ref="id72"/>
-			<label kind="guard" x="-314" y="-170">t&gt;=10</label>
-			<label kind="synchronisation" x="-314" y="-187">exe[id]!</label>
-			<label kind="assignment" x="-314" y="-153">t=0,ts[id][2]=false,tf[id][2]=true,
-updateIteration(), consume(100)</label>
-			<nail x="-238" y="-153"/>
-		</transition>
-		<transition>
-			<source ref="id72"/>
-			<target ref="id71"/>
-			<label kind="guard" x="-331" y="-297">!tf[id][2]&amp;&amp;
-(!isBusy(2) &amp;&amp; PCQueue&gt;2)&amp;&amp;
-(position[id][5])&amp;&amp;
-globalTime&lt;=MAXTIME</label>
-			<label kind="assignment" x="-331" y="-221">t=0,ts[id][2]=true,tf[id][2]=false</label>
-		</transition>
-		<transition>
-			<source ref="id72"/>
-			<target ref="id72"/>
-			<label kind="guard" x="-493" y="-331">!jobsDone()&amp;&amp;
-enoughBattery(id)&amp;&amp;
-globalTime&lt;=MAXTIME</label>
-			<label kind="synchronisation" x="-467" y="-280">move[id]!</label>
-			<label kind="assignment" x="-467" y="-263">t=0</label>
-			<nail x="-450" y="-263"/>
-			<nail x="-357" y="-263"/>
-		</transition>
-		<transition>
-			<source ref="id72"/>
-			<target ref="id73"/>
-			<label kind="guard" x="-637" y="-297">!tf[id][2]&amp;&amp;
-(!isBusy(2))&amp;&amp;
-(position[id][4])&amp;&amp;
-globalTime&lt;=MAXTIME</label>
-			<label kind="assignment" x="-637" y="-221">t=0,ts[id][2]=true,tf[id][2]=false</label>
-		</transition>
-		<transition>
-			<source ref="id73"/>
-			<target ref="id72"/>
-			<label kind="guard" x="-518" y="-170">t&gt;=60</label>
-			<label kind="synchronisation" x="-518" y="-187">exe[id]!</label>
-			<label kind="assignment" x="-654" y="-153">t=0,ts[id][2]=false,tf[id][2]=true,
-updateIteration(), consume(600)</label>
-			<nail x="-535" y="-153"/>
 		</transition>
 	</template>
 	<system>movement0 = Movement0(0);
 taskExe0 = TaskExecution(0);
+
 movement1 = Movement1(1);
 taskExe1 = TaskExecution(1);
+
 movement2 = Movement1(2);
 taskExe2 = TaskExecution(2);
-monitor0 = Auxiliry(0);
-monitor1 = Auxiliry(1);
-monitor2 = Auxiliry(2);
 
-system movement0, taskExe0, movement1, taskExe1, movement2, taskExe2, monitor0, monitor1, monitor2;</system>
+system movement0, taskExe0, movement1, taskExe1, movement2, taskExe2;</system>
 	<queries>
-		<query>
-			<formula>A[] forall(i:int[0,AgentNum-1]) battery[i] &gt; 0</formula>
-			<comment></comment>
-		</query>
-		<query>
-			<formula>A[] !monitor0.Error1 &amp;&amp; !monitor0.Error2 &amp;&amp; !monitor1.Error1 &amp;&amp; !monitor1.Error2 &amp;&amp; !monitor2.Error1 &amp;&amp; !monitor2.Error2</formula>
-			<comment>Error verification
-</comment>
-		</query>
-		<query>
-			<formula>A[] PCQueue &lt;= 2 imply !(taskExe0.T2_2 || taskExe1.T2_2 || taskExe2.T2_2)</formula>
-			<comment>PC priority verificaiton
-</comment>
-		</query>
 		<query>
 			<formula>E&lt;&gt;  stone == 0</formula>
 			<comment>Task coverage</comment>
