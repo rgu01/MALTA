@@ -62,7 +62,7 @@ The gap exists because the task scheduler schedules two consecutive movement:
 
 ![Image](res/Bug_consecutive_movement_model.png "Two consecutive movement in the model")
 
-In this model, moving from P4 to P5 takes 89 time units, where moving from P3 to P4 and then to P5 takes 31 + 56 = 87 time units. Therefore, the path P4->P5 is longer than the deviation P3->P4->P5. This reflects the path-finding algorithm does not find the shortest path, because the direction connections between every two locations in the movement UTA are supposed to be the shortest paths.
+In this model, moving from P4 to P5 takes 89 time units, whereas moving from P3 to P4 and then to P5 takes 31 + 56 = 87 time units. Therefore, the path P4->P5 is longer than the deviation P3->P4->P5. This reflects the path-finding algorithm does not find the shortest path, because the direction connections between every two locations in the movement UTA are supposed to be the shortest paths.
 
 # Feedback
 
