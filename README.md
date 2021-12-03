@@ -56,7 +56,7 @@ Based on the visuable results, you can debug your mission plans. For example:
 
 **Situation 1**: When your path-finding result returns a path that is not the shortest between two milestones, a gap of movement in the plan outline can be shown:
 
-![Image](res/Bug_consecutive_movement.png "A gap between a task execution and a movement")
+![Image](res/Bug_consecutive_movement_outline.png "A gap between a task execution and a movement")
 
 The gap exists because the task scheduler schedules two consecutive movement:
 
