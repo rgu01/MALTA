@@ -50,6 +50,20 @@ If the configure does not have a valid mission plan, the GUI shows:
 
 ![Image](res/Fail.png "Fail")
 
+# Debug your mission plan
+
+Based on the visuable results, you can debug your mission plans. For example:
+
+**Situation 1**: When your path-finding result returns a path that is not the shortest between two milestones, a gap of movement in the plan outline can be shown:
+
+![Image](res/Bug_consecutive_movement.png "A gap between a task execution and a movement")
+
+The gap exists because the task scheduler schedules two consecutive movement:
+
+![Image](res/Bug_consecutive_movement_model.png "Two consecutive movement in the model")
+
+In this model, moving from P4 to P5 takes 89 time units, where moving from P3 to P4 and then to P5 takes 31 + 56 = 87 time units. Therefore, the path P4->P5 is longer than the deviation P3->P4->P5. This reflects the path-finding algorithm does not find the shortest path, because the direction connections between every two locations in the movement UTA are supposed to be the shortest paths.
+
 # Feedback
 
 Any feedback of the tool is appreciated. Please contact: 
