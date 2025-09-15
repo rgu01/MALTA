@@ -74,4 +74,5 @@ Any feedback of the tool is appreciated. Please contact:
 
 # Reference
 [1]. Rong Gu and Eduard Paul Enoiu and Cristina Seceleanu. TAMAA: UPPAAL-based Mission Planning for Autonomous Agents. The 35th ACM/SIGAPP Symposium On Applied Computing. 2019. ([PDF](http://www.es.mdh.se/publications/5685-TAMAA__UPPAAL_based_Mission_Planning_for_Autonomous_Agents))
+
 [2] R Gu, E Baranov, A Ameri, C Seceleanu, E Enoiu, B Crukulu, A Legay, K Lundqvist. Synthesis and Verification of Mission Plans for Multiple Autonomous Agents under Complex Road Conditions. ACM Transactions on Software Engineering and Methodology, 2024. ([PDF](https://drive.google.com/file/d/1h0v2i3mmcU8RSsTHyBc1DnSw2IrCF_xZ/view))
